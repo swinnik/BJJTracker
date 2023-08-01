@@ -29,7 +29,7 @@ const SkillsList = () => {
         ))}
       </View>
       <Text style={styles.boldText}>SkillsList</Text>
-      {skills.map((skill, index) => (
+      {skills.sort().map((skill, index) => (
         <TouchableOpacity
           key={skill.skill}
           onPress={() => handleSkillPress(skill)}
