@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Button, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 
@@ -64,23 +71,23 @@ const MainScreen = ({ navigation }) => {
           <Text> 3 days ago</Text>
         </View>
         <View style={styles.stat}>
-          <Text> Consecutivev fire streak</Text>
+          <Text> Consecutive fire streak</Text>
           <Text> 10 Classes in a row!</Text>
         </View>
       </View>
       <View style={styles.actions}>
-        <View style={styles.action}>
-          <Button
-            title="NewEntry"
-            onPress={() => navigation.navigate("NewJournalEntry")}
-          ></Button>
-        </View>
-        <View style={styles.action}>
-          <Button
-            title="SkillsList"
-            onPress={() => navigation.navigate("SkillsList")}
-          ></Button>
-        </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("NewJournalEntry")}
+        >
+          <View style={styles.action}>
+            <Text>New Entry</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("SkillsList")}>
+          <View style={styles.action}>
+            <Text>Skills List</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.footer}>
         <Text style={styles.timer}> 4hr 20minutes until next class </Text>
@@ -89,11 +96,19 @@ const MainScreen = ({ navigation }) => {
   );
 };
 
+const lightPurple = "#CBC3E3";
 const styles = StyleSheet.create({
   academyLogo: {
     width: 100,
     height: 100,
     overflow: "show",
+    shadowColor: "white",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
   },
 
   weekdays: {
@@ -105,11 +120,18 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     overflow: "show",
+    shadowColor: "white",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
   },
   flameSection: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    // alignItems: "cen ter",
   },
   gridContainer: {
     flexDirection: "column",
@@ -128,18 +150,16 @@ const styles = StyleSheet.create({
   },
   actions: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
-    // height:
+    backgroundColor: lightPurple,
     width: "100%",
-    padding: 10,
+    // padding: 10,
   },
   action: {
-    borderWidth: 1,
-    borderColor: "black",
     margin: 20,
     alignItems: "center",
-    width: "40%",
+    width: "100%",
     padding: 10,
     backgroundColor: "#f8ebeb",
     borderRadius: 14,
@@ -150,53 +170,48 @@ const styles = StyleSheet.create({
       height: 0,
     },
     shadowOpacity: 0.8,
-    shadowRadius: 4,
+    shadowRadius: 2,
   },
 
   header: {
     height: 130,
     width: "102%",
-    backgroundColor: "purple",
+    backgroundColor: lightPurple,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    borderWidth: 10,
+    borderColor: lightPurple,
   },
   stat: {
     flex: 1,
     flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "black",
-    margin: 5,
+    // borderWidth: 1,
+    // borderColor: "black",
+    marginVertical: 5,
     justifyContent: "space-between",
     alignItems: "center",
     height: "10%",
-    padding: 10,
+    padding: 15,
     backgroundColor: "#f8ebeb",
-    borderRadius: 14,
+    // borderRadius: 14,
   },
   dashboard: {
-    backgroundColor: "blue",
-    width: "85%",
-    borderRadius: 14,
+    backgroundColor: lightPurple,
+    width: "100%",
+    // width: "85%",
+    // borderRadius: 14,
 
     height: "25%",
-    padding: 10,
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    paddingVertical: 10,
+    // shadowColor: "#000000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 0,
+    // },
+    // shadowOpacity: 0.8,
+    // shadowRadius: 4,
   },
 
   timer: {
@@ -208,16 +223,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "15%",
     padding: 25,
-    backgroundColor: "green",
+    backgroundColor: "lightgreen",
     justifyContent: "start",
     alignItems: "center",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
   },
 
   icon: {
@@ -226,7 +234,7 @@ const styles = StyleSheet.create({
     right: 0,
     height: 130,
     width: "30%",
-    backgroundColor: "brown",
+
     justifyContent: "center",
     alignItems: "center",
   },
@@ -236,7 +244,7 @@ const styles = StyleSheet.create({
     left: 0,
     // height: 120,
     width: "70%",
-    backgroundColor: "purple",
+
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
