@@ -9,39 +9,140 @@ const MainScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.barChart}>
-        <Text> Bar Chart Attendance</Text>
-      </View>
-      <View style={styles.icon}>
-        <Text> Academy Logo</Text>
-      </View>
-      <Text>Sup tyler!</Text>
-      <Button
-        title="NewEntry"
-        onPress={() => navigation.navigate("NewJournalEntry")}
-      ></Button>
-      <Button
-        title="SkillsList"
-        onPress={() => navigation.navigate("SkillsList")}
-      ></Button>
       <StatusBar style="auto" />
+      <View style={styles.header}>
+        <View style={styles.barChart}>
+          <Text> Bar Chart Attendance</Text>
+        </View>
+        <View style={styles.icon}>
+          <Text> Academy Logo</Text>
+        </View>
+      </View>
+      <View style={styles.dashboard}>
+        <View style={styles.stat}>
+          <Text>Last Time Belt Washed</Text>
+          <Text> 3 days ago</Text>
+        </View>
+        <View style={styles.stat}>
+          <Text> Consecutivev fire streak</Text>
+          <Text> 10 Classes in a row!</Text>
+        </View>
+      </View>
+      <View style={styles.actions}>
+        <View style={styles.action}>
+          <Button
+            title="NewEntry"
+            onPress={() => navigation.navigate("NewJournalEntry")}
+          ></Button>
+        </View>
+        <View style={styles.action}>
+          <Button
+            title="SkillsList"
+            onPress={() => navigation.navigate("SkillsList")}
+          ></Button>
+        </View>
+      </View>
       <View style={styles.footer}>
-        <Text> Timer Until Next Class</Text>
+        <Text style={styles.timer}> 4hr 20minutes until next class </Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  footer: {
-    position: "absolute",
-    bottom: 0,
-    height: 120,
-    width: "100%",
-    backgroundColor: "green",
-    flex: 1,
-    justifyContent: "center",
+  actions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    // height:
+    width: "100%",
+    padding: 10,
+  },
+  action: {
+    // borderWidth: 1,
+    // borderColor: "black",
+    margin: 20,
+    alignItems: "center",
+    width: "40%",
+    padding: 10,
+    backgroundColor: "#f8ebeb",
+    borderRadius: 14,
+
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
+  },
+
+  header: {
+    height: 120,
+    width: "102%",
+    backgroundColor: "purple",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
+  },
+  stat: {
+    flex: 1,
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "black",
+    margin: 5,
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "10%",
+    padding: 10,
+    backgroundColor: "#f8ebeb",
+    borderRadius: 14,
+  },
+  dashboard: {
+    backgroundColor: "blue",
+    width: "85%",
+    borderRadius: 14,
+
+    height: "25%",
+    padding: 10,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
+  },
+
+  timer: {
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  footer: {
+    bottom: -35,
+    width: "100%",
+    height: "15%",
+    padding: 25,
+    backgroundColor: "green",
+    justifyContent: "start",
+    alignItems: "center",
+
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
   },
 
   icon: {
@@ -51,7 +152,6 @@ const styles = StyleSheet.create({
     height: 120,
     width: "30%",
     backgroundColor: "brown",
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -62,7 +162,6 @@ const styles = StyleSheet.create({
     height: 120,
     width: "70%",
     backgroundColor: "purple",
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -71,7 +170,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
 });
 
