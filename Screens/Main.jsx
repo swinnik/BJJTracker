@@ -1,11 +1,13 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import Fire from "../assets/fire.png";
 
 const attendanceGrid = [
-  [0, 1, 0, 1],
-  [1, 1, 1, 0],
-  [1, 0, 1, 1],
+  [0, 1, 0, 1, 1, 1, 1],
+  [1, 1, 1, 0, 1, 1, 0],
+  [1, 0, 1, 1, 1, 0, 1],
+  [1, 1, 1, 0, 1, 1, 0],
 ];
 
 const MainScreen = ({ navigation }) => {
@@ -19,6 +21,15 @@ const MainScreen = ({ navigation }) => {
       <View style={styles.header}>
         <View style={styles.barChart}>
           <View style={styles.gridContainer}>
+            <View style={styles.weekdays}>
+              <Text>M</Text>
+              <Text>T</Text>
+              <Text>W</Text>
+              <Text>T</Text>
+              <Text>F</Text>
+              <Text>S</Text>
+              <Text>S</Text>
+            </View>
             {attendanceGrid.map((row, rowIndex) => (
               <View key={rowIndex} style={styles.row}>
                 {row.map((value, colIndex) => (
@@ -26,16 +37,26 @@ const MainScreen = ({ navigation }) => {
                     key={colIndex}
                     style={[
                       styles.squircle,
-                      { backgroundColor: value === 1 ? "green" : "red" },
+                      { backgroundColor: value === 1 ? "green" : "lightgrey" },
                     ]}
                   />
                 ))}
               </View>
             ))}
           </View>
+          <View style={styles.flameSection}>
+            <Image
+              style={styles.flameImage}
+              source={require("../assets/fire.png")}
+            />
+            <Text>69</Text>
+          </View>
         </View>
         <View style={styles.icon}>
-          <Text> Academy Logo</Text>
+          <Image
+            style={styles.academyLogo}
+            source={require("../assets/CapybaraLogo.png")}
+          />
         </View>
       </View>
       <View style={styles.dashboard}>
@@ -70,6 +91,27 @@ const MainScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  academyLogo: {
+    width: 100,
+    height: 100,
+    overflow: "show",
+  },
+
+  weekdays: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  flameImage: {
+    width: 40,
+    height: 40,
+    overflow: "show",
+  },
+  flameSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   gridContainer: {
     flexDirection: "column",
     justifyContent: "center",
@@ -113,7 +155,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    height: 120,
+    height: 130,
     width: "102%",
     backgroundColor: "purple",
     display: "flex",
@@ -183,7 +225,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 0,
-    height: 120,
+    height: 130,
     width: "30%",
     backgroundColor: "brown",
     justifyContent: "center",
@@ -193,10 +235,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    height: 120,
+    // height: 120,
     width: "70%",
     backgroundColor: "purple",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
   },
 
