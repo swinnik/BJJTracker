@@ -1,24 +1,72 @@
-// backend/prisma/schema.prisma
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+async function createEntriesWithSkills() {
+  try {
+    // Define the Prisma schema
+    const schema = `
+      datasource db {
+        provider = "postgresql"
+        url      = env("DATABASE_URL")
+      }
+
+      generator client {
+        provider = "prisma-client-js"
+      }
+
+      model Skill {
+        id        Int      @id @default(autoincrement())
+        skillName String   @unique
+        entries   Entry[]  @relation("EntrySkills", references: [id])
+      }
+
+      model Entry {
+        id             Int     @id @default(autoincrement())
+        title          String
+        formattedDate  DateTime
+        text           String
+        skills         Skill[] @relation("EntrySkills", references: [id])
+      }
+    `;
+
+    // Create skills first
+    const skill1 = await prisma.skill.create({
+      data: { skillName: 'JavaScript' },
+    });
+
+    const skill2 = await prisma.skill.create({
+      data: { skillName: 'React' },
+    });
+
+    const skill3 = await prisma.skill.create({
+      data: { skillName: 'Node.js' },
+    });
+
+    // Create entries and associate skills with them
+    const entry1 = await prisma.entry.create({
+      data: {
+        title: 'First Entry',
+        formattedDate: new Date(), // Replace with an actual date
+        text: 'This is the first entry.',
+        skills: { connect: [{ id: skill1.id }, { id: skill2.id }] },
+      },
+    });
+
+    const entry2 = await prisma.entry.create({
+      data: {
+        title: 'Second Entry',
+        formattedDate: new Date(), // Replace with an actual date
+        text: 'This is the second entry.',
+        skills: { connect: [{ id: skill2.id }, { id: skill3.id }] },
+      },
+    });
+
+    console.log('Entries and Skills created successfully.');
+  } catch (error) {
+    console.error('Error creating entries and skills:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-model Skill {
-  id        Int      @id @default(autoincrement())
-  skillName String   @unique
-  entries   Entry[]  @relation("EntrySkills", references: [id])
-}
-
-model Entry {
-  id             Int     @id @default(autoincrement())
-  title          String
-  formattedDate  DateTime
-  text           String
-  skills         Skill[] @relation("EntrySkills", references: [id])
-}
+createEntriesWithSkills();
