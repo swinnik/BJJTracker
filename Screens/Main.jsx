@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import Fire from "../assets/fire.png";
 
 const attendanceGrid = [
   [0, 1, 0, 1, 1, 1, 1],
