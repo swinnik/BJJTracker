@@ -24,14 +24,19 @@ const SkillsList = ({ navigation }) => {
         <View>
           <Text style={styles.boldText}>SkillsList</Text>
           <ScrollView style={styles.skillList}>
-            {skills.sort().map((skill, index) => (
-              <TouchableOpacity
-                key={skill.skill}
-                onPress={() => handleSkillPress(skill)}
-              >
-                <Text>{skill}</Text>
-              </TouchableOpacity>
-            ))}
+            {skills
+              .sort()
+              .filter((skill) => {
+                return skill !== "";
+              })
+              .map((skill, index) => (
+                <TouchableOpacity
+                  key={skill.skill}
+                  onPress={() => handleSkillPress(skill)}
+                >
+                  <Text>{skill}</Text>
+                </TouchableOpacity>
+              ))}
           </ScrollView>
         </View>
         <View>
@@ -91,11 +96,12 @@ const SkillsList = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   filterBlock: {
-    margin: 10,
+    marginBottom: 10,
     padding: 10,
     flexDirection: "row",
     justifyContent: "space-around",
     maxHeight: 180,
+    backgroundColor: "lightgreen",
   },
   skillList: {
     backgroundColor: "lightgreen",
@@ -108,8 +114,8 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-    marginHorizontal: 20,
-    borderRadius: 10,
+    // marginHorizontal: 20,
+    // borderRadius: 10,
     backgroundColor: "lightblue",
     padding: 10,
   },
