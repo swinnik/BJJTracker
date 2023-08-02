@@ -9,6 +9,7 @@ import SkillsList from "./Screens/SkillsList";
 import MainScreen from "./Screens/Main";
 import { EntriesProvider } from "./EntriesContext";
 import Landing from "./Screens/Landing";
+import Entry from "./Screens/Entry";
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,11 @@ export default function App() {
             component={Landing}
             options={{ title: "Landing Page" }}
           />
-
+          <Stack.Screen
+            name="Entry"
+            component={Entry}
+            options={{ title: "Entry" }}
+          />
           <Stack.Screen
             name="Main"
             component={MainScreen}

@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import EntriesContext from "../EntriesContext";
 import { ScrollView } from "react-native";
 
-const SkillsList = () => {
+const SkillsList = ({ navigation }) => {
   const { entries, setEntries, skills } = useContext(EntriesContext);
   const [filter, setFilter] = useState([]);
 
@@ -20,43 +20,69 @@ const SkillsList = () => {
 
   return (
     <View>
-      {filter.length > 0 && <Text style={styles.boldText}>Filter</Text>}
-      <View style={{ backgroundColor: "grey" }}>
-        {filter.map((skill, index) => (
-          <TouchableOpacity key={index} onPress={() => handleSkillPress(skill)}>
-            <Text>{skill}</Text>
-          </TouchableOpacity>
-        ))}
+      <View style={styles.filterBlock}>
+        <View>
+          <Text style={styles.boldText}>SkillsList</Text>
+          <ScrollView style={styles.skillList}>
+            {skills.sort().map((skill, index) => (
+              <TouchableOpacity
+                key={skill.skill}
+                onPress={() => handleSkillPress(skill)}
+              >
+                <Text>{skill}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+        <View>
+          <Text style={styles.boldText}>Filter</Text>
+          <ScrollView style={styles.skillList}>
+            {filter.map((skill, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleSkillPress(skill)}
+              >
+                <Text>{skill}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
       </View>
-      <Text style={styles.boldText}>SkillsList</Text>
-      {skills.sort().map((skill, index) => (
-        <TouchableOpacity
-          key={skill.skill}
-          onPress={() => handleSkillPress(skill)}
-        >
-          <Text>{skill}</Text>
-        </TouchableOpacity>
-      ))}
+
       <ScrollView style={styles.scrollView}>
         {entries
           .filter((entry) =>
-            filter.every((skill) => entry.newSkills.includes(skill))
+            filter.every(
+              (skill) => entry.skills.includes(skill) && skills !== ""
+            )
           )
           .map((entry, index) => (
-            <View key={entry.index} style={styles.entry}>
-              <View style={styles.entryTop}>
-                <Text>{entry.title}</Text>
-                <Text>{entry.formattedDate}</Text>
+            <TouchableOpacity
+              key={entry.index}
+              onPress={() =>
+                navigation.navigate("Entry", {
+                  entry: entry,
+                  setFilter: setFilter,
+                })
+              }
+            >
+              <View style={styles.entry}>
+                <View style={styles.entryTop}>
+                  <Text>{entry.title}</Text>
+                  <Text>{entry.formattedDate}</Text>
+                </View>
+                {/* <Text>{entry.text}</Text> */}
+                <View style={styles.entryTop}>
+                  {entry.skills.map((skill, index) => (
+                    <View key={index}>
+                      <Text onPress={() => handleSkillPress(skill)}>
+                        {/* {skill} */}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
               </View>
-              <Text>{entry.text}</Text>
-              <View style={styles.entryTop}>
-                {entry.newSkills.map((skill, index) => (
-                  <View key={index}>
-                    <Text onPress={() => handleSkillPress(skill)}>{skill}</Text>
-                  </View>
-                ))}
-              </View>
-            </View>
+            </TouchableOpacity>
           ))}
       </ScrollView>
     </View>
@@ -64,27 +90,46 @@ const SkillsList = () => {
 };
 
 const styles = StyleSheet.create({
+  filterBlock: {
+    margin: 10,
+    padding: 10,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    maxHeight: 180,
+  },
+  skillList: {
+    backgroundColor: "lightgreen",
+    width: 170,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    padding: 5,
+    margin: 2,
+    borderRadius: 10,
+  },
+
   scrollView: {
-    backgroundColor: "pink",
     marginHorizontal: 20,
+    borderRadius: 10,
+    backgroundColor: "lightblue",
+    padding: 10,
   },
   entryTop: {
     width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    color: "blue",
   },
   boldText: {
     fontWeight: "bold",
     fontSize: 18,
+    margin: 5,
   },
   entry: {
-    borderWidth: 1,
-    borderColor: "black",
     display: "flex",
     padding: 10,
     margin: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
   },
 });
 
