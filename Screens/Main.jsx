@@ -25,11 +25,25 @@ const MainScreen = ({ navigation }) => {
         onPress={() => navigation.navigate("SkillsList")}
       ></Button>
       <StatusBar style="auto" />
+      <View style={styles.footer}>
+        <Text> Timer Until Next Class</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    height: 120,
+    width: "100%",
+    backgroundColor: "green",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   icon: {
     position: "absolute",
     top: 0,
