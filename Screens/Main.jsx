@@ -2,6 +2,12 @@ import { View, Text, StyleSheet, Button } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 
+const attendanceGrid = [
+  [0, 1, 0, 1],
+  [1, 1, 1, 0],
+  [1, 0, 1, 1],
+];
+
 const MainScreen = ({ navigation }) => {
   const handleNewEntryPress = () => {
     navigation.navigate("NewJournalEntry");
@@ -12,7 +18,21 @@ const MainScreen = ({ navigation }) => {
       <StatusBar style="auto" />
       <View style={styles.header}>
         <View style={styles.barChart}>
-          <Text> Bar Chart Attendance</Text>
+          <View style={styles.gridContainer}>
+            {attendanceGrid.map((row, rowIndex) => (
+              <View key={rowIndex} style={styles.row}>
+                {row.map((value, colIndex) => (
+                  <View
+                    key={colIndex}
+                    style={[
+                      styles.squircle,
+                      { backgroundColor: value === 1 ? "green" : "red" },
+                    ]}
+                  />
+                ))}
+              </View>
+            ))}
+          </View>
         </View>
         <View style={styles.icon}>
           <Text> Academy Logo</Text>
@@ -50,6 +70,21 @@ const MainScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  gridContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 5,
+  },
+  squircle: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginRight: 5,
+  },
   actions: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -59,8 +94,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   action: {
-    // borderWidth: 1,
-    // borderColor: "black",
+    borderWidth: 1,
+    borderColor: "black",
     margin: 20,
     alignItems: "center",
     width: "40%",
@@ -135,7 +170,6 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
     justifyContent: "start",
     alignItems: "center",
-
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
