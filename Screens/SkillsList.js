@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     backgroundColor: "pink",
     marginHorizontal: 20,
     paddingVertical: 20,
-    marginBottom: 100,
   },
   entryTop: {
     width: "100%",

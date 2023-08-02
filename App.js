@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, Button, View } from "react-native";
 import NewJournalEntry from "./Screens/NewJournalEntry";
 import SkillsList from "./Screens/SkillsList";
+import MainScreen from "./Screens/Main";
 import { EntriesProvider } from "./EntriesContext";
 
 const Stack = createStackNavigator();
@@ -35,28 +36,6 @@ export default function App() {
     </EntriesProvider>
   );
 }
-
-const MainScreen = ({ navigation }) => {
-  const handleNewEntryPress = () => {
-    navigation.navigate("NewJournalEntry");
-  };
-
-  return (
-    <View style={styles.container}>
-      <Text>Sup tyler!</Text>
-      <Button
-        title="NewEntry"
-        onPress={() => navigation.navigate("NewJournalEntry")}
-      ></Button>
-      <Button
-        title="SkillsList"
-        onPress={() => navigation.navigate("SkillsList")}
-      ></Button>
-      <StatusBar style="auto" />
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
