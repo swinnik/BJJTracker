@@ -20,7 +20,7 @@ const SkillsList = () => {
 
   return (
     <View>
-      <Text style={styles.boldText}>Filter</Text>
+      {filter.length > 0 && <Text style={styles.boldText}>Filter</Text>}
       <View style={{ backgroundColor: "grey" }}>
         {filter.map((skill, index) => (
           <TouchableOpacity key={index} onPress={() => handleSkillPress(skill)}>
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: "pink",
     marginHorizontal: 20,
-    paddingVertical: 20,
   },
   entryTop: {
     width: "100%",

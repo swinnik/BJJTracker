@@ -8,6 +8,7 @@ import NewJournalEntry from "./Screens/NewJournalEntry";
 import SkillsList from "./Screens/SkillsList";
 import MainScreen from "./Screens/Main";
 import { EntriesProvider } from "./EntriesContext";
+import Landing from "./Screens/Landing";
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,13 @@ export default function App() {
   return (
     <EntriesProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Landing">
+          <Stack.Screen
+            name="Landing"
+            component={Landing}
+            options={{ title: "Landing Page" }}
+          />
+
           <Stack.Screen
             name="Main"
             component={MainScreen}

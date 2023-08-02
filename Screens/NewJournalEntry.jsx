@@ -10,7 +10,7 @@ import {
 import { Input } from "react-native-elements";
 import EntriesContext from "../EntriesContext";
 
-const NewJournalEntries = () => {
+const NewJournalEntries = ({ navigation }) => {
   const { entries, setEntries, skills, setSkills } = useContext(EntriesContext);
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString();
@@ -39,6 +39,7 @@ const NewJournalEntries = () => {
       );
       return [...prevSkills, ...uniqueNewSkills];
     });
+    navigation.navigate("Main");
   };
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
