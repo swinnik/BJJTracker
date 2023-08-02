@@ -1,11 +1,24 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// backend/prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+model Skill {
+  id        Int      @id @default(autoincrement())
+  skillName String   @unique
+  entries   Entry[]  @relation("EntrySkills", references: [id])
+}
+
+model Entry {
+  id             Int     @id @default(autoincrement())
+  title          String
+  formattedDate  DateTime
+  text           String
+  skills         Skill[] @relation("EntrySkills", references: [id])
 }
