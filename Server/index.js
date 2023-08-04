@@ -14,7 +14,7 @@ app.use("/api/skills", skillsRouter);
 
 // ... Add more routes as needed
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

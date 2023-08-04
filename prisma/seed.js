@@ -1,47 +1,47 @@
-// prisma/seed.js
-
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-async function seed() {
+async function populateDatabase() {
   try {
-    await prisma.skill.createMany({
-      data: [
-        { skillName: "Skill 1" },
-        { skillName: "Skill 2" },
-        { skillName: "Skill 3" },
-        // Add more skills as needed
-      ],
-      skipDuplicates: true,
+    // Create skills
+    const skill1 = await prisma.skill.create({
+      data: { skillName: 'JavaScript' },
     });
 
-    await prisma.entry.createMany({
-      data: [
-        {
-          title: "Entry 1",
-          formattedDate: new Date(),
-          text: "This is the first entry.",
-          skills: {
-            connect: [{ skillName: "Skill 1" }, { skillName: "Skill 2" }],
-          },
-        },
-        {
-          title: "Entry 2",
-          formattedDate: new Date(),
-          text: "This is the second entry.",
-          skills: {
-            connect: [{ skillName: "Skill 2" }, { skillName: "Skill 3" }],
-          },
-        },
-        // Add more entries as needed
-      ],
+    const skill2 = await prisma.skill.create({
+      data: { skillName: 'React' },
     });
+
+    const skill3 = await prisma.skill.create({
+      data: { skillName: 'Node.js' },
+    });
+
+    // Create entries and associate skills with them
+    const entry1 = await prisma.entry.create({
+      data: {
+        title: 'First Entry',
+        formattedDate: new Date(),
+        text: 'This is the first entry.',
+        skills: { connect: [{ id: skill1.id }, { id: skill2.id }] },
+      },
+    });
+
+    const entry2 = await prisma.entry.create({
+      data: {
+        title: 'Second Entry',
+        formattedDate: new Date(),
+        text: 'This is the second entry.',
+        skills: { connect: [{ id: skill2.id }, { id: skill3.id }] },
+      },
+    });
+
+    console.log('Database populated successfully.');
   } catch (error) {
-    console.error("Error seeding the database:", error);
+    console.error('Error populating the database:', error);
   } finally {
     await prisma.$disconnect();
   }
 }
 
-seed();
+populateDatabase();
