@@ -2,34 +2,54 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// async function main() {
-//   //   await prisma.user.create({
-//   //     data: {
-//   //       name: "Gertrude",
-//   //       email: "Gertrude@prisma.io",
-//   //       posts: {
-//   //         create: { title: "Hello World" },
-//   //       },
-//   //       profile: {
-//   //         create: { bio: "I like turtles" },
-//   //       },
-//   //     },
-//   //   });
-
-//   const allUsers = await prisma.user.findMany({
-//     include: {
-//       posts: true,
-//       profile: true,
-//     },
-//   });
-//   console.dir(allUsers, { depth: null });
-// }
 async function main() {
-  const post = await prisma.user.update({
-    where: { id: 4 },
-    data: { published: true },
+  // Create the user Alice and her first post (existing code)
+  // await prisma.user.create({
+  //   data: {
+  //     name: "Bob",
+  //     email: "bob@prisma.io",
+  //     posts: {
+  //       create: { title: "Hello World" },
+  //     },
+  //     profile: {
+  //       create: { bio: "I like turtles" },
+  //     },
+  //   },
+  // });
+
+  // Get Alice's user record from the database
+  const user = await prisma.user.findUnique({
+    where: {
+      email: "bob@prisma.io",
+    },
   });
-  console.log(post);
+
+  if (!user) {
+    throw new Error("User not found in the database.");
+  }
+
+  // Create a second post for Alice
+  await prisma.post.create({
+    data: {
+      title: "Third  Post of Bob",
+      content: "This is Alice's second post.",
+      published: true,
+      authorId: user.id,
+    },
+  });
+
+  // Fetch all users (including posts and profiles) from the database
+  const allUsers = await prisma.user.findMany({
+    where: {
+      email: "bob@prisma.io",
+    },
+    include: {
+      posts: true,
+      profile: true,
+    },
+  });
+
+  console.dir(allUsers, { depth: null });
 }
 
 main()
